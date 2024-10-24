@@ -1,1 +1,1 @@
-# BookMyShowClone
+# BookMyShowClone app
