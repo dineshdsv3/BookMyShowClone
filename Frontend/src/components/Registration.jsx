@@ -1,4 +1,6 @@
-import React from 'react'
+import React from 'react';
+import { Form, Input, Button } from 'antd';
+import { Link } from 'react-router-dom';
 
 const Registration = () => {
     return (

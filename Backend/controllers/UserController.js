@@ -1,4 +1,5 @@
 const userModel = require("../models/userSchema");
+const bcrypt = require('bcrypt');
 
 const registerUser = async (req, res) => {
     try {
@@ -10,6 +11,11 @@ const registerUser = async (req, res) => {
                 message: "User Already Exists",
             });
         }
+
+        // hashing the password
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(req?.body?.password, salt);
+        req.body.password = hashedPassword;
 
         const newUser = new userModel(req?.body);
         await newUser.save();
@@ -34,7 +40,10 @@ const loginUser = async (req, res) => {
             });
         }
 
-        if (req?.body?.password !== user?.password) {
+        const validatePassword = await bcrypt.compare(req?.body?.password, user.password);
+
+
+        if (!validatePassword) {
             return res.send({
                 success: false,
                 message: "Please enter valid password",
