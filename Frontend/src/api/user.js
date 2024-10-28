@@ -11,3 +11,14 @@ export const RegisterUser = async (values) => {
     }
 
 }
+
+
+export const LoginUser = async (values) => {
+    try {
+        const response = await axiosInstance.post("/users/login", values);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
