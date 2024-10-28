@@ -1,5 +1,6 @@
 const userModel = require("../models/userSchema");
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const registerUser = async (req, res) => {
     try {
@@ -50,16 +51,39 @@ const loginUser = async (req, res) => {
             });
         }
 
+        const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, {
+            expiresIn: '1d'
+        })
+
         res.send({
             success: true,
             message: "You've Successfully Logged In",
+            data: token
         });
     } catch (error) {
         console.log(error);
     }
 };
 
+
+const currentUser = async (req, res) => {
+    try {
+        const user = await userModel.findById(req.body.userId).select("-password");
+        res.send({
+            success: true,
+            message: "User Details Fetched successfully",
+            data: user
+        })
+    } catch (error) {
+        res.send({
+            success: false,
+            message: error.message
+        })
+    }
+}
+
 module.exports = {
     registerUser,
     loginUser,
+    currentUser
 };

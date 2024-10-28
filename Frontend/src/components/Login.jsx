@@ -11,6 +11,7 @@ const Login = () => {
             const response = await LoginUser(values);
             if (response?.success) {
                 message.success('Login Success');
+                localStorage.setItem('tokenForBMS', response?.data);
                 navigate('/')
             }
         } catch (error) {
