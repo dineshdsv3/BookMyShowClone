@@ -22,3 +22,15 @@ export const LoginUser = async (values) => {
         throw error;
     }
 }
+
+
+
+export const GetCurrentUser = async (values) => {
+    try {
+        const response = await axiosInstance.get("/users/getUserDetails");
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
