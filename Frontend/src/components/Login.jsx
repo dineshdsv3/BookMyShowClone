@@ -2,23 +2,27 @@ import React from 'react'
 import { Form, Input, Button, message } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { LoginUser } from '../api/user';
+import { useDispatch } from 'react-redux';
+import { hideLoading, showLoading } from '../redux/loaderSlice';
 
 const Login = () => {
     const navigate = useNavigate();
-
+    const dispatch = useDispatch();
     const onFinish = async (values) => {
         try {
+            dispatch(showLoading());
             const response = await LoginUser(values);
             if (response?.success) {
-                message.success('Login Success');
-                localStorage.setItem('tokenForBMS', response?.data);
-                navigate('/')
+                message.success(response?.message);
+                localStorage.setItem("tokenForBMS", response?.data);
+                navigate("/");
             }
         } catch (error) {
-            message.error(error)
+            message.error(error);
+        } finally {
+            dispatch(hideLoading());
         }
-
-    }
+    };
 
     return (
         <header className="App-header">
