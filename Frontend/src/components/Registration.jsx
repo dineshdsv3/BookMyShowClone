@@ -2,25 +2,27 @@ import React from 'react';
 import { Form, Input, Button, message } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { RegisterUser } from '../api/user';
+import { useDispatch } from 'react-redux';
+import { hideLoading, showLoading } from '../redux/loaderSlice';
 
 const Registration = () => {
     const navigate = useNavigate();
 
+    const dispatch = useDispatch();
     const onFinish = async (values) => {
-
         try {
+            dispatch(showLoading());
             const response = await RegisterUser(values);
             if (response?.success) {
                 message.success(response?.message);
-                navigate("/login")
-            } else {
-                message.success(response?.message);
+                navigate("/login");
             }
         } catch (error) {
-            message.error(error)
-            console.log(error)
+            message.error(error);
+        } finally {
+            dispatch(hideLoading());
         }
-    }
+    };
 
     return (
         <header className="App-header">
