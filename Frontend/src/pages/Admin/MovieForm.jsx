@@ -4,7 +4,7 @@ import moment from "moment";
 import TextArea from "antd/es/input/TextArea";
 import { useDispatch } from "react-redux";
 import { hideLoading, showLoading } from "../../redux/loaderSlice";
-import { updateMovie } from "../../api/movie";
+import { updateMovie, addMovie } from "../../api/movie";
 
 const MovieForm = ({
     isModalOpen,
@@ -12,6 +12,7 @@ const MovieForm = ({
     selectedMovie,
     setSelectedMovie,
     getData,
+    formType
 }) => {
     const dispatch = useDispatch();
     // selectedMovie.releaseDate = DateTime.fromISO(
@@ -32,12 +33,17 @@ const MovieForm = ({
     const onFinish = async (values) => {
         try {
             dispatch(showLoading());
-            const response = await updateMovie({
-                ...values,
-                movieId: selectedMovie._id,
-            });
+            let response = null;
+            if (formType === "edit") {
+                response = await updateMovie({
+                    ...values,
+                    movieId: selectedMovie._id,
+                });
+            } else {
+                response = await addMovie(values);
+            }
             if (response.success) {
-                message.success(response.success);
+                message.success(response.message);
                 getData();
                 setIsModalOpen(false);
             }
@@ -50,7 +56,7 @@ const MovieForm = ({
     return (
         <Modal
             centered
-            title={"Edit Movie"}
+            title={formType === "add" ? "Add Movie" : "Edit Movie"}
             open={isModalOpen}
             onCancel={handleCancel}
             width={800}
