@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { DateTime } from "luxon";
+import moment from "moment";
 import { Table, message, Button } from "antd";
 import { useDispatch } from "react-redux";
 import { hideLoading, showLoading } from "../../redux/loaderSlice";
@@ -70,7 +70,8 @@ const MovieList = () => {
             title: "Release Date",
             dataIndex: "releaseDate",
             render: (text, data) => {
-                return DateTime.fromISO(text).toFormat("dd-MM-yyyy");
+                // moment;
+                return moment(data.releaseDate).format("MM-DD-YYYY");
             },
         },
         {
