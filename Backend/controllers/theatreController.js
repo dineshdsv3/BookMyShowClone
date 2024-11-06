@@ -18,12 +18,13 @@ const addTheatre = async (req, res) => {
 
 const updateTheatre = async (req, res) => {
     try {
-        await Theatre.findByIdAndUpdate(req.body.theatreId, req.body, {
+        const theatre = await Theatre.findByIdAndUpdate(req.body.theatreId, req.body, {
             new: true,
         });
         res.send({
             success: true,
             message: "Theatre has been updated!",
+            data: theatre
         });
     } catch (err) {
         res.send({
