@@ -16,3 +16,29 @@ axiosInstance.interceptors.request.use((config) => {
 }, (error) => {
     return Promise.reject(error)
 })
+
+
+const handleExpiredToken = (navigate) => {
+    alert("Your session has expired. Please log in again.");
+    localStorage.removeItem("tokenForBMS");
+    navigate("/login");
+};
+
+
+export const setupAxiosInterceptors = (navigate) => {
+    axiosInstance.interceptors.response.use(
+        (response) => {
+            const message = response.data?.message;
+            if (message === "Expired Token" || message === "Invalid/Expired Token") {
+                handleExpiredToken(navigate);
+            }
+            return response;
+        },
+        (error) => {
+            if (error.response?.status === 401) {
+                handleExpiredToken(navigate);
+            }
+            return Promise.reject(error);
+        }
+    );
+};
