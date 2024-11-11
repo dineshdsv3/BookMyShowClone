@@ -12,6 +12,7 @@ import Partner from "./pages/Partner";
 import Admin from "./pages/Admin";
 import { setupAxiosInterceptors } from './api';
 import { useEffect } from 'react';
+import SingleMovie from './components/SingleMovie';
 
 function App() {
 
@@ -49,6 +50,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Partner />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/movie/:id"
+          element={
+            <ProtectedRoute>
+              <SingleMovie />
             </ProtectedRoute>
           }
         />
