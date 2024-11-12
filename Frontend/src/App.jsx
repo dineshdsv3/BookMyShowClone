@@ -13,6 +13,7 @@ import Admin from "./pages/Admin";
 import { setupAxiosInterceptors } from './api';
 import { useEffect } from 'react';
 import SingleMovie from './components/SingleMovie';
+import BookShow from './components/BookShow';
 
 function App() {
 
@@ -58,6 +59,14 @@ function App() {
           element={
             <ProtectedRoute>
               <SingleMovie />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/book-show/:id"
+          element={
+            <ProtectedRoute>
+              <BookShow />
             </ProtectedRoute>
           }
         />
