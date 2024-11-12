@@ -2,7 +2,7 @@ const express = require("express");
 const connectDB = require("./config/db");
 const app = express();
 const cors = require('cors');
-
+require('dotenv').config()
 const userRoute = require("./routes/userRoute");
 const movieRoute = require("./routes/movieRoute");
 const theatreRoute = require("./routes/theatreRoute");
@@ -11,7 +11,7 @@ const bookingRoute = require("./routes/bookingRoute")
 
 const { validateJWTToken } = require("./middleware/authorizationMiddleware");
 
-require('dotenv').config()
+
 connectDB()
 
 app.use(express.json());
