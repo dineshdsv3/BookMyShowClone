@@ -7,7 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { message, Card, Row, Col, Button } from "antd";
 import moment from "moment";
 import StripeCheckout from "react-stripe-checkout";
-import { bookShow, makePayment } from "../api/booking";
+import { makePaymentAndBookShow } from "../api/booking";
 
 const BookShow = () => {
     const params = useParams();
@@ -52,6 +52,7 @@ const BookShow = () => {
                     <div className="screen-div"></div>
                     <ul className="seat-ul justify-content-center">
                         {Array.from(Array(rows).keys()).map((row) => {
+                            // to be discussed how we are spliting it into multiple rows
                             return Array.from(Array(columns).keys()).map((column) => {
                                 let seatNumber = row * columns + column + 1;
                                 let seatClass = "seat-btn";
@@ -70,15 +71,15 @@ const BookShow = () => {
                                                         if (selectedSeats.includes(seatNumber)) {
                                                             setSelectedSeats(
                                                                 selectedSeats.filter(
-                                                                    (curSeatNumber) => curSeatNumber !== seatNumber
+                                                                    (curSeatNumber) =>
+                                                                        curSeatNumber !== seatNumber
                                                                 )
                                                             );
                                                         } else {
                                                             setSelectedSeats([...selectedSeats, seatNumber]);
                                                         }
                                                     }
-                                                }
-                                                }
+                                                }}
                                                 className={seatClass}
                                             >
                                                 {seatNumber}
@@ -93,12 +94,13 @@ const BookShow = () => {
         );
     };
 
-    const book = async (transactionId) => {
+    const bookAndPay = async (token) => {
         try {
             dispatch(showLoading());
-            const response = await bookShow({
+            const response = await makePaymentAndBookShow({
+                token,
+                amount: selectedSeats.length * show.ticketPrice * 100,
                 show: params.id,
-                transactionId,
                 seats: selectedSeats,
                 user: user._id,
             });
@@ -108,30 +110,9 @@ const BookShow = () => {
             } else {
                 message.error(response.message);
             }
-            dispatch(hideLoading());
         } catch (err) {
-            message.error(err.message);
-            dispatch(hideLoading());
-        }
-    };
-
-    const onToken = async (token) => {
-        try {
-            dispatch(showLoading());
-            const response = await makePayment(
-                token,
-                selectedSeats.length * show.ticketPrice
-            );
-            if (response.success) {
-                message.success(response.message);
-                book(response.data);
-                console.log(response);
-            } else {
-                message.error(response.message);
-            }
-            dispatch(hideLoading());
-        } catch (err) {
-            message.error(err.message);
+            message.error(err);
+        } finally {
             dispatch(hideLoading());
         }
     };
@@ -179,7 +160,7 @@ const BookShow = () => {
 
                             {selectedSeats.length > 0 && (
                                 <StripeCheckout
-                                    token={onToken}
+                                    token={bookAndPay}
                                     amount={selectedSeats.length * show.ticketPrice}
                                     billingAddress
                                     stripeKey="pk_test_51QJzsRBAfQPuSZ0iopEG74oGJtvsvPkaQBYMSSnZvP6t91OEnowe8npERYYElTuogEBGd9aYv3U9HZStyWafqrW500Hx5WJPXh"
