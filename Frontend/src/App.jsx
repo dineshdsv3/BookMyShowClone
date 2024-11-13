@@ -14,6 +14,8 @@ import { setupAxiosInterceptors } from './api';
 import { useEffect } from 'react';
 import SingleMovie from './components/SingleMovie';
 import BookShow from './components/BookShow';
+import Forget from './components/Forget';
+import Reset from './components/Reset';
 
 function App() {
 
@@ -70,6 +72,8 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/forget" element={<Forget />} />
+        <Route path="/reset" element={<Reset />} />
       </Routes>
     </Provider>
 
