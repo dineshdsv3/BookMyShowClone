@@ -2,6 +2,10 @@ const express = require("express");
 const connectDB = require("./config/db");
 const app = express();
 const cors = require('cors');
+const rateLimit = require("express-rate-limit");
+
+
+
 require('dotenv').config()
 const userRoute = require("./routes/userRoute");
 const movieRoute = require("./routes/movieRoute");
@@ -14,8 +18,16 @@ const { validateJWTToken } = require("./middleware/authorizationMiddleware");
 
 connectDB()
 
+const apiLimiter = rateLimit({
+    windowMS: 15 * 60 * 1000,
+    max: 100,
+    message: "Too many requests from this IP, please try again after 15 minutes",
+});
+
 app.use(express.json());
 app.use(cors())
+
+app.use("/bms", apiLimiter);
 app.use("/bms/users", userRoute);
 app.use("/bms/movies", validateJWTToken, movieRoute);
 app.use("/bms/theatres", validateJWTToken, theatreRoute);
