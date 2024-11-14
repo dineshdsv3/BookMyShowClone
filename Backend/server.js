@@ -4,7 +4,11 @@ const app = express();
 const cors = require('cors');
 const rateLimit = require("express-rate-limit");
 const helmet = require("helmet");
+const path = require('path');
 
+const clientBuildPath = path.join(__dirname, '../Frontend/dist');
+
+app.use(express.static(clientBuildPath));
 
 require('dotenv').config()
 const userRoute = require("./routes/userRoute");
