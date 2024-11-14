@@ -14,6 +14,7 @@ const showRoute = require("./routes/showRoute");
 const bookingRoute = require("./routes/bookingRoute")
 
 const { validateJWTToken } = require("./middleware/authorizationMiddleware");
+const ExpressMongoSanitize = require("express-mongo-sanitize");
 
 
 connectDB()
@@ -25,9 +26,11 @@ const apiLimiter = rateLimit({
 });
 
 app.use(express.json());
+app.use(ExpressMongoSanitize());
 app.use(cors())
 
 app.use(helmet());
+
 app.use(
     helmet.contentSecurityPolicy({
         directives: {
