@@ -5,7 +5,7 @@ import Home from './components/Home';
 import Login from './components/Login';
 import Registration from './components/Registration';
 import store from './redux/store';
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 import ProtectedRoute from './components/ProtectedRoute';
 import Profile from "./pages/Profile/index";
 import Partner from "./pages/Partner";
@@ -21,14 +21,21 @@ function App() {
 
   const navigate = useNavigate();
 
+  const { loading } = useSelector((state) => {
+    return state.loader;
+  });
+
   useEffect(() => {
     setupAxiosInterceptors(navigate);
   }, [navigate]);
 
   return (
-
-    <Provider store={store}>
-
+    <>
+      {loading && (
+        <div className="loader-container">
+          <div className="loader"></div>
+        </div>
+      )}
       <Routes>
         <Route path="/" element={<ProtectedRoute>
           <Home />
@@ -75,7 +82,7 @@ function App() {
         <Route path="/forget" element={<Forget />} />
         <Route path="/reset" element={<Reset />} />
       </Routes>
-    </Provider>
+    </>
 
   )
 }
