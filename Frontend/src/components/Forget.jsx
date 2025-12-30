@@ -57,6 +57,7 @@ const Forget = () => {
                             <Form.Item className="d-block">
                                 <Button
                                     type="primary"
+                                    className="btn-primary"
                                     block
                                     htmlType="submit"
                                     style={{ fontSize: "1rem", fontWeight: "600" }}

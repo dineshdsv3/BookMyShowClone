@@ -61,14 +61,14 @@ const SingleMovie = () => {
         getAllTheatres();
     }, [date]);
     return (
-        <div className="inner-container" style={{ paddingTop: "20px" }}>
+        <div className="inner-container container" style={{ paddingTop: "20px" }}>
             {movie && (
-                <div className="d-flex single-movie-div">
-                    <div className="flex-Shrink-0 me-3 single-movie-img">
-                        <img src={movie.poster} width={150} alt="Movie Poster" />
+                <div className="d-flex single-movie-div card-glass pop shadow-sm">
+                        <div className="flex-Shrink-0 me-3 single-movie-img">
+                        <img className="movie-poster-small shadow-sm" src={movie.poster} width={100} height={100} alt="Movie Poster" />
                     </div>
                     <div className="w-100">
-                        <h1 className="mt-0">{movie.title}</h1>
+                        <h1 className="mt-0" style={{ color: 'var(--text-on-bg)' }}>{movie.title}</h1>
                         <p className="movie-data">
                             Language: <span>{movie.language}</span>
                         </p>

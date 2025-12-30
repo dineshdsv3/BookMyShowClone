@@ -3,13 +3,243 @@
   pointer-events: none;
 }
 .App-header {
-  background-color: #f3f8ff;
+  background: var(--bg-gradient);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  color: var(--text-on-bg);
 }
+
+/* Base page styles */
+html,body,#root{ height:100%; }
+body{
+  margin:0;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: var(--bg-gradient);
+  color: var(--text-on-bg);
+  -webkit-font-smoothing:antialiased;
+}
+
+/* Typography: prefer app text color, but keep tables using a darker/table-safe color */
+:where(h1,h2,h3,h4,h5,h6,p,span,label,a,li,button,input,select) {
+  color: var(--text-on-bg);
+}
+
+/* Preserve table text color (do not force theme color inside tables) */
+:where(.ant-table, table, .ant-table *) {
+  color: var(--table-text, #111) !important;
+}
+
+/* Form / input color rules to ensure contrast depending on background */
+/* Dark header background (pages like Login/Register which use .App-header) */
+.App-header .ant-input,
+.App-header input,
+.App-header textarea,
+.App-header .ant-input-affix-wrapper,
+.App-header .ant-select-selector,
+.App-header .ant-form-item-label > label {
+  color: var(--text-on-bg) !important;
+}
+.App-header .ant-input::placeholder,
+.App-header input::placeholder,
+.App-header textarea::placeholder {
+  color: rgba(230,238,248,0.65) !important;
+}
+
+/* Light surfaces (modals, white cards) should use dark text for readability */
+:where(.ant-modal, .card-glass, .ant-modal .ant-modal-content, .email-container) {
+  color: var(--table-text, #0b1220) !important;
+}
+:where(.ant-modal .ant-input, .ant-modal input, .card-glass input, .card-glass textarea, .card-glass .ant-input,
+  .ant-modal .ant-input-affix-wrapper, .ant-modal .ant-select-selector) {
+  color: var(--table-text, #0b1220) !important;
+}
+:where(.ant-modal .ant-input::placeholder, .card-glass .ant-input::placeholder, .ant-modal input::placeholder) {
+  color: rgba(11,18,32,0.45) !important;
+}
+
+/* Form labels: adapt based on their surface */
+.card-glass .ant-form-item-label > label,
+.ant-modal .ant-form-item-label > label { color: rgba(11,18,32,0.85) !important; }
+.App-header .ant-form-item-label > label { color: var(--text-on-bg) !important; }
+
+/* Buttons inside light surfaces use dark text when necessary */
+.card-glass .btn-primary { color: #fff !important; }
+
+
+a{ color: inherit; }
+button{ font-family: inherit; }
+.App-header {
+  background: var(--bg-gradient);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-on-bg);
+}
+
+/* Theme variables and global utilities */
+:root{
+  /* === 3-color core palette (change here to theme the whole app) === */
+  --primary: #6C63FF; /* Indigo - primary brand color */
+  --accent: #FF7A59;  /* Coral - accent for CTAs */
+  --secondary: #00C2A8; /* Teal - secondary / highlights */
+
+  /* supportive tokens */
+  --muted: #9aa4b2;
+  --muted-lighter: rgba(255,255,255,0.02);
+  --muted-light: rgba(255,255,255,0.04);
+  --muted-border: rgba(255,255,255,0.03);
+  --bg: #071129; /* deep navy background */
+  --surface: #0f1724; /* cards / surfaces */
+  --card-bg: rgba(255,255,255,0.03); /* translucent card */
+  --text-on-bg: #e6eef8;
+  --glass: rgba(255,255,255,0.04);
+
+  /* Gradients */
+  --bg-gradient: linear-gradient(180deg, var(--bg) 0%, var(--surface) 60%);
+  --primary-gradient: linear-gradient(90deg,var(--primary),#8b6ff5);
+
+  /* Spacing */
+  --page-gutter: 1.25rem;
+
+  /* Animation durations */
+  --anim-fast: 160ms;
+  --anim-medium: 360ms;
+  --anim-slow: 900ms;
+
+  /* Responsive typography scale */
+  --type-xxl: 2.25rem;
+  --type-xl: 1.75rem;
+  --type-lg: 1.25rem;
+  --type-md: 1rem;
+  --type-sm: 0.875rem;
+}
+
+/* Responsive breakpoints */
+@media (max-width: 600px){
+  :root{
+    --type-xxl: 1.6rem;
+    --type-xl: 1.25rem;
+    --type-lg: 1rem;
+    --page-gutter: 0.75rem;
+  }
+}
+@media (min-width: 601px) and (max-width: 1024px){
+  :root{
+    --type-xxl: 1.9rem;
+    --type-xl: 1.4rem;
+    --page-gutter: 1rem;
+  }
+}
+
+/* Layout container */
+.container{
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--page-gutter);
+}
+
+/* Animations */
+@keyframes popIn{ from{ opacity:0; transform: scale(0.98) translateY(6px);} to{ opacity:1; transform: none;} }
+@keyframes pulse{ 0%{ box-shadow:0 0 0 rgba(0,0,0,0);}50%{ box-shadow:0 12px 30px rgba(108,99,255,0.08);}100%{ box-shadow:0 0 0 rgba(0,0,0,0);} }
+@keyframes shimmer{ 0%{ background-position:-200px 0;}100%{ background-position:200px 0;} }
+
+/* Additional micro-animations */
+@keyframes floatUp { from{ transform: translateY(6px); opacity: 0 } to{ transform: translateY(0); opacity:1 } }
+@keyframes swing { 0%{ transform: rotate(-2deg)} 50%{ transform: rotate(2deg)} 100%{ transform: rotate(-2deg)} }
+
+.pop{ animation: popIn var(--anim-medium) cubic-bezier(.2,.8,.2,1) both; }
+.pulse{ animation: pulse 2s infinite; }
+.skeleton{ background: linear-gradient(90deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.04) 50%, rgba(255,255,255,0.02) 100%); background-size: 400px 100%; animation: shimmer 1.2s linear infinite; }
+
+/* Shadows */
+.shadow-sm { box-shadow: 0 4px 12px rgba(2,6,23,0.06); }
+.shadow-md { box-shadow: 0 12px 36px rgba(2,6,23,0.10); }
+.shadow-lg { box-shadow: 0 28px 80px rgba(2,6,23,0.14); }
+.soft-outline { box-shadow: 0 0 0 6px rgba(108,99,255,0.06); }
+
+/* Hover lift / interactive */
+.lift { transition: transform var(--anim-medium) ease, box-shadow var(--anim-medium) ease; }
+.lift:hover { transform: translateY(-6px); }
+.press:active { transform: translateY(2px) scale(0.998); }
+
+/* Small decorative micro interactions */
+.float-up { animation: floatUp var(--anim-medium) both; }
+.swing { animation: swing 3.5s ease-in-out infinite; }
+
+/* Make primary CTAs pop with glow */
+.btn-primary { box-shadow: 0 10px 28px rgba(108,99,255,0.12); }
+.btn-primary:active { box-shadow: 0 6px 18px rgba(108,99,255,0.10); }
+
+/* Global utilities */
+.btn-ghost{
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.06);
+  color: var(--text-on-bg);
+  transition: all var(--anim-fast) ease;
+  padding: 0.45rem 0.7rem;
+  border-radius: 8px;
+}
+.btn-ghost:hover{
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(108,99,255,0.12);
+}
+.card-glass{
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius: 12px;
+  padding: 1rem;
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.03);
+}
+
+/* Posters */
+.movie-poster{
+  /* Fixed square posters on the home page for uniform layout */
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: transform var(--anim-medium) ease, box-shadow var(--anim-medium) ease;
+}
+.movie-poster:hover{ transform: translateY(-6px) scale(1.03); box-shadow: 0 18px 50px rgba(108,99,255,0.08); }
+.movie-poster-small{
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.card-elevated{ transition: transform var(--anim-medium) ease, box-shadow var(--anim-medium) ease; }
+.card-elevated:hover{ transform: translateY(-6px); box-shadow: 0 18px 50px rgba(2,136,209,0.06); }
+
+/* Ant Design tweaks for better visual fit */
+.ant-card{ background: transparent; border: none; }
+.ant-card-body{ padding: 1rem; }
+.ant-table-tbody > tr:hover > td{ background: rgba(255,255,255,0.02); transform: translateY(-2px); }
+.ant-table-thead > tr > th{ background: rgba(255,255,255,0.02); }
+
+/* Make images responsive inside cards */
+.card-glass img{ max-width:100%; height:auto; }
+.fade-in{ animation: fadeIn var(--anim-medium) ease both; }
+@keyframes fadeIn{ from{ opacity:0; transform: translateY(6px)} to{opacity:1; transform:none} }
+
+/* primary button */
+.btn-primary{ background: var(--primary-gradient); color: white; border: none; padding: 0.6rem 1rem; border-radius: 8px; transition: transform var(--anim-fast) ease, box-shadow var(--anim-fast) ease; }
+.btn-primary:hover{ transform: translateY(-3px); box-shadow: 0 12px 30px rgba(108,99,255,0.18); }
+
+/* small responsive tweaks */
+@media (max-width:600px){
+  .App-logo{ height: 30vmin; }
+  .btn-primary, .btn-ghost{ width: 100%; display: inline-block; text-align:center; }
+}
+
+/* Accent glow */
+.glow{ box-shadow: 0 8px 40px rgba(108,99,255,0.12); }
 .flex-1 {
   flex: 1;
 }
@@ -30,20 +260,20 @@
   max-width: 300px;
 }
 .movie-data {
-  color: #999;
+  color: var(--muted);
   font-size: 15px;
   margin-top: 4px;
   margin-bottom: 8px;
 }
 .movie-data span {
-  color: #212121;
+  color: var(--text-on-bg);
   font-weight: 600;
 }
 .flex-shrink-0 {
   flex-shrink: 0;
 }
 .App-link {
-  color: #61dafb;
+  color: var(--primary);
 }
 .d-block {
   display: block;
@@ -60,7 +290,7 @@ button {
   width: 100%;
 }
 .text-white {
-  color: #fff;
+  color: var(--text-on-bg);
 }
 .m-0 {
   margin: 0;
@@ -137,8 +367,8 @@ table th {
   margin-top: 8px;
 }
 hr {
-  background-color: #eee !important;
-  border: 1px solid #ddd;
+  background-color: var(--muted-lighter) !important;
+  border: 1px solid var(--muted-border);
 }
 .show-ul {
   list-style: none;
@@ -148,19 +378,19 @@ hr {
   padding-left: 0;
 }
 .blue-clr {
-  color: #1890ff;
+  color: var(--primary);
 }
 .show-ul li {
   padding: 0.75rem 1rem;
-  border: 1px solid #bbb;
+  border: 1px solid var(--muted-border);
   border-radius: 5px;
   cursor: pointer;
-  color: orange;
-  transition: all 0.1s ease-in;
+  color: var(--muted);
+  transition: all 0.12s ease-in;
 }
 .show-ul li:hover {
-  color: #fff;
-  background-color: orange;
+  color: var(--text-on-bg);
+  background-color: var(--accent);
   border-color: transparent;
 }
 .movie-title-details * {
@@ -173,7 +403,7 @@ hr {
 }
 .show-name span {
   font-weight: 500;
-  color: #555;
+  color: var(--muted);
 }
 .max-width-600 {
   max-width: 600px;
@@ -191,8 +421,8 @@ hr {
   max-width: 600px;
 }
 .seat-ul .seat-btn {
-  background-color: #f6f6f6;
-  border: 1px solid #a0a0a0;
+  background-color: var(--muted-lighter);
+  border: 1px solid var(--muted-border);
   width: 40px;
   height: 35px;
   text-align: center;
@@ -202,28 +432,28 @@ hr {
   min-height: unset;
 }
 .seat-ul .seat-btn:hover {
-  background-color: #f1f1f1;
+  background-color: var(--muted-light);
 }
 .seat-ul .seat-btn.selected {
-  border-color: #02a802;
-  background-color: #02a802;
-  color: #fff;
+  border-color: var(--secondary);
+  background-color: var(--secondary);
+  color: #fff; /* keep readable button text */
 }
 .seat-ul .seat-btn.booked {
-  background-color: #ddd;
-  color: #999;
-  border-color: #ddd;
+  background-color: var(--muted-light);
+  color: var(--muted);
+  border-color: var(--muted-border);
   cursor: not-allowed;
 }
 .screen-div {
   max-width: 75%;
   margin-inline: auto;
   height: 10px;
-  background-color: #eee;
+  background-color: rgba(255,255,255,0.03);
 }
 .bottom-card {
   padding: 1rem;
-  border: 1px solid #ccc;
+  border: 1px solid var(--muted-border);
   border-radius: 5px;
 }
 .bottom-card div span {
@@ -231,7 +461,7 @@ hr {
   font-size: 1.25rem;
 }
 .show-details h3 {
-  border-bottom: 1px solid #e9e9e9;
+  border-bottom: 1px solid var(--muted-border);
   padding-bottom: 4px;
 }
 .show-details * {
@@ -256,9 +486,9 @@ hr {
   align-items: center;
 }
 .loader {
-  border: 16px solid #f3f3f3;
+  border: 16px solid var(--muted-lighter);
   border-radius: 50%;
-  border-top: 16px solid #3498db;
+  border-top: 16px solid var(--primary);
   width: 120px;
   height: 120px;
   -webkit-animation: spin 2s linear infinite; /* Safari */

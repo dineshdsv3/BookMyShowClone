@@ -92,9 +92,9 @@ const TheaterTable = () => {
                 return (
                     <div className="d-flex align-items-center gap-10">
                         {data.isActive ? (
-                            <Button onClick={() => handleStatusChange(data)}>Block</Button>
+                            <Button className="btn-ghost" onClick={() => handleStatusChange(data)}>Block</Button>
                         ) : (
-                            <Button onClick={() => handleStatusChange(data)}>Approve</Button>
+                            <Button className="btn-primary" onClick={() => handleStatusChange(data)}>Approve</Button>
                         )}
                     </div>
                 );
@@ -108,7 +108,9 @@ const TheaterTable = () => {
 
     return (
         <div>
-            <Table dataSource={theatres} columns={columns} />
+            <div className="card-glass shadow-sm px-3 py-2">
+              <Table dataSource={theatres} columns={columns} />
+            </div>
         </div>
     );
 };

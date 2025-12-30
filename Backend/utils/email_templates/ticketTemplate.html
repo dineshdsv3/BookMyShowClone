@@ -5,69 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Movie Ticket</title>
     <style>
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        margin: 0;
-        padding: 0;
-      }
-      .email-container {
-        max-width: 600px;
-        margin: 20px auto;
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      }
-      .header {
-        text-align: center;
-      }
-      .header img {
-        max-width: 100%;
-        height: auto;
-        border-radius: 10px;
-      }
-      .ticket-details {
-        margin-top: 20px;
-      }
-      .ticket-details h2 {
-        color: #333;
-      }
-      .details {
-        list-style: none;
-        padding: 0;
-      }
-      .details li {
-        margin: 10px 0;
-        color: #555;
-      }
-      .details li span {
-        font-weight: bold;
-      }
-      .footer {
-        text-align: center;
-        margin-top: 20px;
-        font-size: 12px;
-        color: #999;
-      }
+      body { font-family: Arial, Helvetica, sans-serif; background-color: #f4f6fb; margin:0; padding:0 }
+      .email-container{ max-width:700px; margin:18px auto; background:#fff; padding:18px; border-radius:12px; border:1px solid #eef2ff }
+      .header{ display:flex; align-items:center; gap:12px }
+      .brand-logo{ width:56px; height:56px; border-radius:10px; background:linear-gradient(90deg,#6C63FF,#8B6BFF); display:inline-flex; align-items:center; justify-content:center; color:#fff; font-weight:700 }
+      .ticket-hero{ flex:1 }
+      .ticket-title{ margin:0; font-size:20px; color:#111 }
+      .ticket-sub{ margin:4px 0 0 0; color:#556176; font-size:13px }
+      .ticket-body{ margin-top:14px; display:flex; gap:18px; flex-wrap:wrap }
+      .ticket-left{ flex:1; min-width:220px }
+      .ticket-right{ width:260px; min-width:180px; background:linear-gradient(180deg,#fbfbff,#f7f6ff); border-radius:10px; padding:12px; border:1px dashed #eef1ff }
+      .details{ list-style:none; padding:0; margin:0 }
+      .details li{ padding:8px 0; border-bottom:1px dashed #f1f4ff; color:#444 }
+      .details li span{ display:inline-block; min-width:120px; color:#556176 }
+      .price{ font-weight:700; color:#111 }
+      .footer{ text-align:center; margin-top:18px; font-size:13px; color:#77869a }
+      .qr{ width:100%; height:120px; background:linear-gradient(90deg,#e8f7f4,#f6fbff); border-radius:8px; display:flex; align-items:center; justify-content:center; color:#00a78a; font-weight:700 }
     </style>
   </head>
   <body>
     <div class="email-container">
-      <div class="ticket-details">
-        <h2>Movie Ticket</h2>
-        <ul class="details">
-          <li><span>Name:</span> #{name}</li>
-          <li><span>Movie:</span> #{movie}</li>
-          <li><span>Theatre:</span> #{theatre}</li>
-          <li><span>Date:</span> #{date}</li>
-          <li><span>Time:</span> #{time}</li>
-          <li><span>Seats NOs:</span> #{seats}</li>
-          <li><span>Amount:</span> Rs. #{amount}</li>
-          <li><span>Transaction ID:</span> #{transactionId}</li>
-        </ul>
+      <div class="header">
+        <div class="brand-logo">BMS</div>
+        <div class="ticket-hero">
+          <h2 class="ticket-title">Your Movie Ticket</h2>
+          <div class="ticket-sub">Thank you for booking with BookMyShow — enjoy the show!</div>
+        </div>
       </div>
-      <div class="footer">Enjoy your movie!</div>
+
+      <div class="ticket-body">
+        <div class="ticket-left">
+          <ul class="details">
+            <li><span>Name:</span> #{name}</li>
+            <li><span>Movie:</span> #{movie}</li>
+            <li><span>Theatre:</span> #{theatre}</li>
+            <li><span>Date:</span> #{date}</li>
+            <li><span>Time:</span> #{time}</li>
+            <li><span>Seats:</span> #{seats}</li>
+            <li><span>Amount:</span> <span class="price">Rs. #{amount}</span></li>
+            <li><span>Transaction ID:</span> #{transactionId}</li>
+          </ul>
+        </div>
+        <div class="ticket-right">
+          <div style="font-size:13px; color:#556176; margin-bottom:8px">Show QR / Pass</div>
+          <div class="qr">QR CODE</div>
+          <div style="margin-top:10px; font-size:13px; color:#556176">Present this at the theatre entrance. Enjoy your movie!</div>
+        </div>
+      </div>
+
+      <div class="footer">Need help? Contact support@example.com</div>
     </div>
   </body>
 </html>

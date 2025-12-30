@@ -39,10 +39,7 @@ const Home = () => {
 
     return (
         <>
-            <Row
-                className="justify-content-center w-100"
-                style={{ padding: "20px 15px 20px 0px" }}
-            >
+            <Row className="justify-content-center w-100 container" style={{ padding: "20px 15px 20px 0px" }}>
                 <Col xs={{ span: 24 }} lg={{ span: 12 }}>
                     <Input
                         placeholder="Type here to search for movies"
@@ -85,23 +82,9 @@ const Home = () => {
                                                 )}`
                                             );
                                         }}
-                                        className="cursor-pointer"
+                                        className="cursor-pointer movie-poster card-elevated pop shadow-md lift"
                                         src={movie.poster}
                                         alt="Movie Poster"
-                                        width={300}
-                                        height={300}
-                                        style={{
-                                            borderRadius: "8px",
-                                            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-                                            transition: "transform 0.3s",
-                                            objectFit: "cover",
-                                        }}
-                                        onMouseOver={(e) => {
-                                            e.currentTarget.style.transform = "scale(1.05)";
-                                        }}
-                                        onMouseOut={(e) => {
-                                            e.currentTarget.style.transform = "scale(1)";
-                                        }}
                                     />
                                     <h3
                                         onClick={() => {

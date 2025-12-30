@@ -35,41 +35,45 @@ const Booking = () => {
         <>
             {bookings && (
                 <Row gutter={24}>
-                    {bookings.map((booking) => {
+                    {bookings
+                        .filter((b) => b && b.show && b.show.movie)
+                        .map((booking) => {
                         return (
                             <Col key={booking._id} xs={{ span: 24 }} lg={{ span: 12 }}>
-                                <Card className="mb-3">
+                                <Card className="mb-3 card-glass card-elevated shadow-sm">
                                     <div className="d-flex flex-column-mob">
                                         <div className="flex-shrink-0">
                                             <img
-                                                src={booking.show.movie.poster}
+                                                src={booking.show.movie.poster || ''}
                                                 width={100}
-                                                alt="Movie Poster"
+                                                height={100}
+                                                style={{ objectFit: 'cover', borderRadius: 6 }}
+                                                alt={booking.show.movie?.title || 'Movie Poster'}
                                             />
                                         </div>
                                         <div className="show-details flex-1">
-                                            <h3 className="mt-0 mb-0">{booking.show.movie.title}</h3>
+                                            <h3 className="mt-0 mb-0">{booking.show.movie?.title || 'Untitled Movie'}</h3>
                                             <p>
-                                                Theatre: <b>{booking.show.theatre.name}</b>
+                                                Theatre: <b>{booking.show.theatre?.name || 'Unknown'}</b>
                                             </p>
                                             <p>
-                                                Seats: <b>{booking.seats.join(", ")}</b>
+                                                Seats: <b>{(booking.seats && booking.seats.join(", ")) || 'N/A'}</b>
                                             </p>
                                             <p>
                                                 Date & Time:
                                                 <b>
-                                                    {moment(booking.show.date).format("MMM Do YYYY")}
-                                                    {moment(booking.show.time, "HH:mm").format("hh:mm A")}
+                                                    {booking.show?.date ? moment(booking.show.date).format("MMM Do YYYY") : 'N/A'}
+                                                    {booking.show?.time ? ' ' + moment(booking.show.time, "HH:mm").format("hh:mm A") : ''}
                                                 </b>
                                             </p>
                                             <p>
                                                 Amount:
                                                 <b>
-                                                    Rs.{booking.seats.length * booking.show.ticketPrice}
+                                                    Rs.{(booking.seats ? booking.seats.length : 0) * (booking.show?.ticketPrice || 0)}
                                                 </b>
                                             </p>
                                             <p>
-                                                Booking ID: <b>{booking.transactionId} </b>
+                                                Booking ID: <b>{booking.transactionId || '—' } </b>
                                             </p>
                                         </div>
                                     </div>
@@ -84,7 +88,7 @@ const Booking = () => {
                 <div className="text-center pt-3">
                     <h1>You've not booked any show yet!</h1>
                     <Link to="/">
-                        <Button type="primary">Start Booking</Button>
+                        <Button className="btn-primary">Start Booking</Button>
                     </Link>
                 </div>
             )}

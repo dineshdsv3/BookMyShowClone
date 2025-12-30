@@ -36,6 +36,7 @@ const MovieList = () => {
             render: (text, data) => {
                 return (
                     <img
+                        className="movie-poster movie-poster-small"
                         width="75"
                         height="115"
                         style={{ objectFit: "cover" }}
@@ -81,6 +82,7 @@ const MovieList = () => {
                 return (
                     <div>
                         <Button
+                            className="btn-ghost"
                             onClick={() => {
                                 setIsModalOpen(true);
                                 setSelectedMovie(data);
@@ -90,6 +92,7 @@ const MovieList = () => {
                             <EditOutlined />
                         </Button>
                         <Button
+                            className="btn-ghost"
                             onClick={() => {
                                 setIsDeleteModalOpen(true);
                                 setSelectedMovie(data);
@@ -110,6 +113,7 @@ const MovieList = () => {
         <div>
             <div className="d-flex justify-content-end">
                 <Button
+                    className="btn-primary"
                     onClick={() => {
                         setIsModalOpen(true);
                     }}
@@ -117,7 +121,9 @@ const MovieList = () => {
                     Add Movie
                 </Button>
             </div>
-            <Table columns={tableHeadings} dataSource={movies} />
+                        <div className="card-glass shadow-sm px-3 py-2">
+                            <Table columns={tableHeadings} dataSource={movies} />
+                        </div>
             {isModalOpen && (
                 <MovieForm
                     isModalOpen={isModalOpen}

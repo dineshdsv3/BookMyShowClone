@@ -74,33 +74,36 @@ const TheatreList = () => {
             render: (text, data) => {
                 return (
                     <div className="d-flex align-items-center gap-10">
-                        <Button
+                            <Button
                             onClick={() => {
                                 setIsModalOpen(true);
                                 setFormType("edit");
                                 setSelectedTheatre(data);
                             }}
-                        >
-                            <EditOutlined />
-                        </Button>
-                        <Button
+                                className="btn-ghost"
+                            >
+                                <EditOutlined />
+                            </Button>
+                            <Button
                             onClick={() => {
                                 setIsDeleteModalOpen(true);
                                 setSelectedTheatre(data);
                             }}
-                        >
-                            <DeleteOutlined />
-                        </Button>
-                        {data.isActive && (
-                            <Button
-                                onClick={() => {
-                                    setIsShowModalOpen(true);
-                                    setSelectedTheatre(data);
-                                }}
+                                className="btn-ghost"
                             >
-                                + Shows
+                                <DeleteOutlined />
                             </Button>
-                        )}
+                            {data.isActive && (
+                                <Button
+                                    className="btn-primary"
+                                    onClick={() => {
+                                        setIsShowModalOpen(true);
+                                        setSelectedTheatre(data);
+                                    }}
+                                >
+                                    + Shows
+                                </Button>
+                            )}
                     </div>
                 );
             },
@@ -115,7 +118,7 @@ const TheatreList = () => {
         <div>
             <div className="d-flex justify-content-end">
                 <Button
-                    type="primary"
+                    className="btn-primary"
                     onClick={() => {
                         setIsModalOpen(true);
                         setFormType("add");
@@ -124,7 +127,9 @@ const TheatreList = () => {
                     Add Theatre
                 </Button>
             </div>
-            <Table dataSource={theatres} columns={columns} />
+                        <div className="card-glass shadow-sm px-3 py-2">
+                            <Table dataSource={theatres} columns={columns} />
+                        </div>
             {isModalOpen && (
                 <TheatreForm
                     isModalOpen={isModalOpen}

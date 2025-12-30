@@ -126,6 +126,7 @@ const BookShow = () => {
                 <Row gutter={24}>
                     <Col span={24}>
                         <Card
+                            className="card-glass shadow-md lift"
                             title={
                                 <div className="movie-title-details">
                                     <h1>{show.movie.movieName}</h1>
@@ -166,7 +167,7 @@ const BookShow = () => {
                                     stripeKey="pk_test_51QJzsRBAfQPuSZ0iopEG74oGJtvsvPkaQBYMSSnZvP6t91OEnowe8npERYYElTuogEBGd9aYv3U9HZStyWafqrW500Hx5WJPXh"
                                 >
                                     <div className="max-width-600 mx-auto">
-                                        <Button type="primary" shape="round" size="large" block>
+                                        <Button className="btn-primary" shape="round" size="large" block>
                                             Pay Now
                                         </Button>
                                     </div>

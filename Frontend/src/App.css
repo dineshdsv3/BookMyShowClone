@@ -1,3 +1,32 @@
+/* App logo spin animation */
+.App-logo-spin {
+  animation: App-logo-spin infinite var(--anim-slow) linear;
+  filter: drop-shadow(0 6px 18px rgba(108,99,255,0.18));
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg) scale(0.98); }
+  50% { transform: rotate(180deg) scale(1.02); }
+  to { transform: rotate(360deg) scale(0.98); }
+}
+
+/* Button pulse for primary actions */
+.btn-primary{
+  background: var(--primary-gradient);
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  transition: transform var(--anim-fast) ease, box-shadow var(--anim-fast) ease;
+}
+.btn-primary:hover{
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(108,99,255,0.18);
+}
+
+/* subtle floating card */
+.card-elevated{ transition: transform var(--anim-medium) ease, box-shadow var(--anim-medium) ease; }
+.card-elevated:hover{ transform: translateY(-6px); box-shadow: 0 18px 50px rgba(2,136,209,0.08); }
 #root {
   max-width: 2200px;
   margin: 0 auto;
@@ -12,10 +41,10 @@
   transition: filter 300ms;
 }
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+  filter: drop-shadow(0 0 2em rgba(108,99,255,0.66));
 }
 .logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  filter: drop-shadow(0 0 2em rgba(97,218,251,0.66));
 }
 
 @keyframes logo-spin {
@@ -38,5 +67,5 @@
 }
 
 .read-the-docs {
-  color: #888;
+  color: var(--muted);
 }

@@ -147,6 +147,7 @@ const TheatreForm = ({
                     <Button
                         block
                         type="primary"
+                        className="btn-primary"
                         htmlType="submit"
                         style={{ fontSize: "1rem", fontWeight: "600" }}
                     >

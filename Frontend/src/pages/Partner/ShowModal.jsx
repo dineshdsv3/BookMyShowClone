@@ -140,6 +140,7 @@ const ShowModal = ({
                 return (
                     <div className="d-flex align-items-center gap-10">
                         <Button
+                            className="btn-ghost"
                             onClick={() => {
                                 setView("edit");
                                 setSelectedShow({
@@ -151,11 +152,12 @@ const ShowModal = ({
                         >
                             <EditOutlined />
                         </Button>
-                        <Button onClick={() => handleDelete(data._id)}>
+                        <Button className="btn-ghost" onClick={() => handleDelete(data._id)}>
                             <DeleteOutlined />
                         </Button>
                         {data.isActive && (
                             <Button
+                                className="btn-primary"
                                 onClick={() => {
                                     setIsShowModalOpen(true);
                                 }}
@@ -212,7 +214,7 @@ const ShowModal = ({
                             : "Edit Show"}
                 </h3>
                 {view === "table" && (
-                    <Button type="primary" onClick={() => setView("add")}>
+                    <Button type="primary" className="btn-primary" onClick={() => setView("add")}>
                         Add Show
                     </Button>
                 )}
@@ -365,18 +367,19 @@ const ShowModal = ({
                     </Row>
                     <div className="d-flex gap-10">
                         <Button
-                            className=""
-                            block
-                            onClick={() => {
-                                setView("table");
-                            }}
-                            htmlType="button"
-                        >
-                            <ArrowLeftOutlined /> Go Back
-                        </Button>
+                                className="btn-ghost"
+                                block
+                                onClick={() => {
+                                    setView("table");
+                                }}
+                                htmlType="button"
+                            >
+                                <ArrowLeftOutlined /> Go Back
+                            </Button>
                         <Button
                             block
                             type="primary"
+                            className="btn-primary"
                             htmlType="submit"
                             style={{ fontSize: "1rem", fontWeight: "600" }}
                         >
